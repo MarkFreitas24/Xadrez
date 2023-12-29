@@ -4,7 +4,7 @@
     {
         public int Lines { get; set; }
         public int Columns { get; set; }
-        public Part[,] Parts;
+        private Part[,] Parts;
 
         public Board() { }
 
@@ -13,6 +13,11 @@
             Lines = lines;
             Columns = columns;
             Parts = new Part[Lines, Columns];
+        }
+
+        public Part Part(int line, int column)
+        {
+            return Parts[line, column];
         }
     }
 }
