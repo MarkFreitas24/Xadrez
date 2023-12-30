@@ -1,4 +1,4 @@
-﻿namespace Xadrez_console.Tabuleiro.Enum
+﻿namespace Tabuleiro
 {
     enum Color
     {

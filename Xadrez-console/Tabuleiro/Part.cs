@@ -12,11 +12,11 @@ namespace Tabuleiro
 
         public Part() { }
 
-        public Part(Position position, Color color, Board board)
+        public Part(Board board, Color color)
         {
-            Position = position;
-            Color = color;
+            Position = null;
             Board = board;
+            Color = color;
             QuantityMovements = 0;
         }
 

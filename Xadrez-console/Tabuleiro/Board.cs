@@ -1,6 +1,6 @@
 ﻿namespace Tabuleiro
 {
-    internal class Board
+    class Board
     {
         public int Lines { get; set; }
         public int Columns { get; set; }
@@ -18,6 +18,12 @@
         public Part Part(int line, int column)
         {
             return Parts[line, column];
+        }
+
+        public void PlacePart(Part p, Position pos)
+        {
+            Parts[pos.Line, pos.Column] = p;
+            p.Position = pos;
         }
     }
 }
