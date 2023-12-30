@@ -1,4 +1,4 @@
-﻿using Tabuleiro;
+﻿using board;
 namespace Xadrez_console
 {
     internal class Screen

@@ -1,5 +1,5 @@
 ﻿
-using Tabuleiro;
+using board;
 
 
 namespace Chess

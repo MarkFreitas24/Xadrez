@@ -1,7 +1,7 @@
 ﻿
 using System.Drawing;
 
-namespace Tabuleiro
+namespace board
 {
     internal class Part
     {
