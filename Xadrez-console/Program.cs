@@ -9,18 +9,10 @@ namespace Xadrez_console
         {
             try
             {
-                Board gameBoard = new Board(8, 8);
+                ChessMatch match = new ChessMatch();
 
-                gameBoard.PlacePart(new Tower(gameBoard, Color.Preta), new Position(0, 0));
-                gameBoard.PlacePart(new Tower(gameBoard, Color.Preta), new Position(1, 3));
-                gameBoard.PlacePart(new King(gameBoard, Color.Preta), new Position(2, 4));
+                Screen.PrintBoard(match.Board);
 
-                gameBoard.PlacePart(new Tower(gameBoard, Color.Branca), new Position(3, 5));
-                gameBoard.PlacePart(new Tower(gameBoard, Color.Branca), new Position(5, 6));
-                gameBoard.PlacePart(new King(gameBoard, Color.Branca), new Position(6, 6));
-
-
-                Screen.PrintBoard(gameBoard);
             }
             catch(BoardException e)
             {

@@ -20,6 +20,11 @@ namespace board
             QuantityMovements = 0;
         }
 
+        public void IncreaseQuantityMovement()
+        {
+            QuantityMovements++;
+        }
+
 
     }
 }

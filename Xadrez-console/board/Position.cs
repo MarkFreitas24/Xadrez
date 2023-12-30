@@ -17,7 +17,9 @@
 
         public override string ToString()
         {
-            return Line + ", " + Column;
+            return Line 
+                + ", " 
+                + Column;
         }
     }
 }

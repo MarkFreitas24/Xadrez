@@ -1,4 +1,6 @@
 ﻿using board;
+using Chess;
+
 namespace Xadrez_console
 {
     internal class Screen
