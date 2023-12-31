@@ -58,7 +58,7 @@ namespace Xadrez_console
         {
             if (part == null)
             {
-                Console.Write("- ");
+                Console.Write("■ ");
             }
             else
             {
