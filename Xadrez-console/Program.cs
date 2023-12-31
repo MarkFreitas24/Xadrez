@@ -16,10 +16,17 @@ namespace Xadrez_console
                     Console.Clear();
                     Screen.PrintBoard(match.Board);
 
+                    Console.WriteLine();
                     Console.Write("Origem: ");
                     Position origin = Screen.ReadChessPosition().ToPosition();
 
-                    Console.WriteLine("Destino: ");
+                    bool[,] possiblesMovements = match.Board.Part(origin).PossibleMovements();
+
+                    Console.Clear();
+                    Screen.PrintBoard(match.Board, possiblesMovements);
+
+                    Console.WriteLine();
+                    Console.Write("Destino: ");
                     Position detiny = Screen.ReadChessPosition().ToPosition();
 
                     match.ExecuteMovement(origin, detiny);
