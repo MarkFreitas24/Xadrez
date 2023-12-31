@@ -27,6 +27,14 @@ namespace Xadrez_console
             Console.WriteLine("  A B C D E F G H");
         }
 
+        public static ChessPosition ReadChessPosition()
+        {
+            string play = Console.ReadLine();
+            char column = play[0];
+            int line = int.Parse(play[1] + "");
+            return new ChessPosition(column, line);
+        }
+
         public static void PrintPart(Part part)
         {
             if (part.Color == Color.Branca)
