@@ -1,4 +1,5 @@
-﻿using board;
+﻿using System.Collections.Generic;
+using board;
 using Chess;
 
 namespace Xadrez_console
@@ -16,11 +17,7 @@ namespace Xadrez_console
                     try
                     {
                         Console.Clear();
-                        Screen.PrintBoard(match.Board);
-                        Console.WriteLine();
-
-                        Console.WriteLine("Turno: " + match.Round);
-                        Console.WriteLine("Aguardando jogada:" + match.CurrentPlayer);
+                        Screen.PrintMatch(match);
 
                         Console.WriteLine();
                         Console.Write("Origem: ");

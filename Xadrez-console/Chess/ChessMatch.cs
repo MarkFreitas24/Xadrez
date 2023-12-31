@@ -1,4 +1,5 @@
-﻿using board;
+﻿using System.Collections.Generic;
+using board;
 
 namespace Chess
 {
@@ -8,6 +9,8 @@ namespace Chess
         public int Round {  get; private set; }
         public Color CurrentPlayer {  get; private set; }
         public bool Finished { get; private set; }
+        private HashSet<Part> Parts;
+        private HashSet<Part> Captured;
 
         public ChessMatch()
         {
@@ -15,6 +18,8 @@ namespace Chess
             Round = 1;
             CurrentPlayer = Color.Branca;
             Finished = false;
+            Parts = new HashSet<Part>();
+            Captured = new HashSet<Part>();
             PlaceParts();
         }
 
@@ -24,6 +29,10 @@ namespace Chess
             p.IncreaseQuantityMovement();
             Part capturedPart = Board.RemovePart(destiny);
             Board.PlacePart(p, destiny);
+            if (capturedPart != null)
+            {
+                Captured.Add(capturedPart);
+            }
         }
 
         public void MakePlay(Position origin, Position destiny)
@@ -69,21 +78,54 @@ namespace Chess
             }
         }
 
+        public HashSet<Part> CapturedParts(Color color)
+        {
+            HashSet<Part> parts = new HashSet<Part>();
+            foreach (Part x in Captured)
+            {
+                if(x.Color == color)
+                {
+                    parts.Add(x);
+                }
+            }
+            return parts;
+        }
+
+        public HashSet<Part> PartsInGame(Color color)
+        {
+            HashSet<Part> parts = new HashSet<Part>();
+            foreach (Part x in Parts)
+            {
+                if (x.Color == color)
+                {
+                    parts.Add(x);
+                }
+            }
+            parts.ExceptWith(CapturedParts(color));
+            return parts;
+        }
+
+        public void InputNewPart(char column, int line, Part part)
+        {
+            Board.PlacePart(part, new ChessPosition(column, line).ToPosition());
+            Parts.Add(part);
+        }
+
         private void PlaceParts()
         {
-            Board.PlacePart(new Tower(Board, Color.Branca), new ChessPosition('c', 1).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Branca), new ChessPosition('c', 2).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Branca), new ChessPosition('d', 2).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Branca), new ChessPosition('e', 2).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Branca), new ChessPosition('e', 1).ToPosition());
-            Board.PlacePart(new King(Board, Color.Branca), new ChessPosition('d', 1).ToPosition());
+            InputNewPart('c', 1, new Tower(Board, Color.Branca));
+            InputNewPart('c', 2, new Tower(Board, Color.Branca));
+            InputNewPart('d', 2, new Tower(Board, Color.Branca));
+            InputNewPart('e', 2, new Tower(Board, Color.Branca));
+            InputNewPart('e', 1, new Tower(Board, Color.Branca));
+            InputNewPart('d', 1, new King(Board, Color.Branca));
 
-            Board.PlacePart(new Tower(Board, Color.Vermelha), new ChessPosition('c', 7).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Vermelha), new ChessPosition('c', 8).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Vermelha), new ChessPosition('d', 7).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Vermelha), new ChessPosition('e', 7).ToPosition());
-            Board.PlacePart(new Tower(Board, Color.Vermelha), new ChessPosition('e', 8).ToPosition());
-            Board.PlacePart(new King(Board, Color.Vermelha), new ChessPosition('d', 8).ToPosition());
+            InputNewPart('c', 7, new Tower(Board, Color.Vermelha));
+            InputNewPart('c', 8, new Tower(Board, Color.Vermelha));
+            InputNewPart('d', 7, new Tower(Board, Color.Vermelha));
+            InputNewPart('e', 7, new Tower(Board, Color.Vermelha));
+            InputNewPart('e', 8, new Tower(Board, Color.Vermelha));
+            InputNewPart('d', 8, new King(Board, Color.Vermelha));
         }
     }
 }

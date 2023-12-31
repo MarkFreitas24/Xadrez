@@ -1,10 +1,45 @@
-﻿using board;
+﻿using System.Collections.Generic;
+using board;
 using Chess;
 
 namespace Xadrez_console
 {
     internal class Screen
     {
+        public static void PrintMatch(ChessMatch match)
+        {
+            PrintBoard(match.Board);
+            Console.WriteLine();
+            PrintCapturedParts(match);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + match.Round);
+            Console.WriteLine("Aguardando jogada:" + match.CurrentPlayer);
+        }
+
+        public static void PrintCapturedParts(ChessMatch match)
+        {
+            Console.WriteLine("Peças capturadas: ");
+            Console.Write("Brancas: ");
+            PrintSet(match.CapturedParts(Color.Branca));
+            Console.WriteLine();
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("Vermelhas: ");
+            PrintSet(match.CapturedParts(Color.Vermelha));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+
+        public static void PrintSet(HashSet<Part> set)
+        {
+            Console.Write("[");
+            foreach(Part x in set)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+        }
+
         public static void PrintBoard(Board board)
         {
             for (int i = 0; i < board.Lines;  i++)
