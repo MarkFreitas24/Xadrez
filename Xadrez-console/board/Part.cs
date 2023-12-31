@@ -24,6 +24,11 @@ namespace board
             QuantityMovements++;
         }
 
+        public void DecreaseQuantityMovement()
+        {
+            QuantityMovements--;
+        }
+
         public bool TherePossibleMovements()
         {
             bool[,] possible = PossibleMovements();
