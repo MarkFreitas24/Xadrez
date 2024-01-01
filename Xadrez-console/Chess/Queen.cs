@@ -1,11 +1,6 @@
 ﻿using board;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Xadrez_console.Chess
+namespace Chess
 {
     internal class Queen : Part
     {
@@ -27,8 +22,8 @@ namespace Xadrez_console.Chess
 
             Position position = new Position(0, 0);
 
-            //North
-            position.SetValues(Position.Line - 1, Position.Column);
+            //West
+            position.SetValues(Position.Line, Position.Column - 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
                 movements[position.Line, position.Column] = true;
@@ -37,20 +32,7 @@ namespace Xadrez_console.Chess
                     break;
                 }
 
-                position.Line = position.Line - 1;
-            }
-
-            //South
-            position.SetValues(Position.Line + 1, Position.Column);
-            while (Board.ValidPosition(position) && CanMove(position))
-            {
-                movements[position.Line, position.Column] = true;
-                if (Board.Part(position) != null && Board.Part(position).Color != Color)
-                {
-                    break;
-                }
-
-                position.Line = position.Line + 1;
+                position.SetValues(position.Line, position.Column - 1);
             }
 
             //East
@@ -63,11 +45,11 @@ namespace Xadrez_console.Chess
                     break;
                 }
 
-                position.Column = position.Column + 1;
+                position.SetValues(position.Line, position.Column + 1);
             }
 
-            //West
-            position.SetValues(Position.Line, Position.Column - 1);
+            //North
+            position.SetValues(Position.Line - 1, Position.Column);
             while (Board.ValidPosition(position) && CanMove(position))
             {
                 movements[position.Line, position.Column] = true;
@@ -76,7 +58,20 @@ namespace Xadrez_console.Chess
                     break;
                 }
 
-                position.Column = position.Column - 1;
+                position.SetValues(position.Line - 1, position.Column);
+            }
+
+            //South
+            position.SetValues(Position.Line + 1, Position.Column);
+            while (Board.ValidPosition(position) && CanMove(position))
+            {
+                movements[position.Line, position.Column] = true;
+                if (Board.Part(position) != null && Board.Part(position).Color != Color)
+                {
+                    break;
+                }
+
+                position.SetValues(position.Line + 1, position.Column);
             }
 
             //North West

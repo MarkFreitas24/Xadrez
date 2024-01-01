@@ -1,11 +1,6 @@
 ﻿using board;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Xadrez_console.Chess
+namespace Chess
 {
     internal class Pawn : Part
     {
@@ -27,11 +22,6 @@ namespace Xadrez_console.Chess
             return Board.Part(position) == null;
         }
 
-        private bool CanMove(Position position)
-        {
-            Part part = Board.Part(position);
-            return part == null || part.Color != Color;
-        }
         public override bool[,] PossiblesMovements()
         {
             bool[,] movements = new bool[Board.Lines, Board.Columns];
@@ -46,7 +36,8 @@ namespace Xadrez_console.Chess
                     movements[position.Line, position.Column] = true;
                 }
                 position.SetValues(position.Line - 2, position.Column);
-                if (Board.ValidPosition(position) && Free(position) && QuantityMovements == 0)
+                Position position2 = new Position(position.Line - 1, position.Column);
+                if (Board.ValidPosition(position2) && Free(position2) && Board.ValidPosition(position) && Free(position) && QuantityMovements == 0)
                 {
                     movements[position.Line, position.Column] = true;
                 }
@@ -70,7 +61,8 @@ namespace Xadrez_console.Chess
                     movements[position.Line, position.Column] = true;
                 }
                 position.SetValues(position.Line + 2, position.Column);
-                if (Board.ValidPosition(position) && Free(position) && QuantityMovements == 0)
+                Position position2 = new Position(position.Line + 1, position.Column);
+                if (Board.ValidPosition(position2) && Free(position2) && Board.ValidPosition(position) && Free(position) && QuantityMovements == 0)
                 {
                     movements[position.Line, position.Column] = true;
                 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using board;
-using Xadrez_console.Chess;
 
 namespace Chess
 {
