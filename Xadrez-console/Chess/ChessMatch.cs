@@ -69,8 +69,15 @@ namespace Chess
                 Check = false;
             }
 
-            Round++;
-            ChangePlayer();
+            if (CheckmateTest(Opponent(CurrentPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Round++;
+                ChangePlayer();
+            }
         }
 
         public void ValidateOriginPosition(Position position)
@@ -178,6 +185,37 @@ namespace Chess
             return false;
         }
 
+        public bool CheckmateTest(Color color)
+        {
+            if (!IsInCheck(color))
+            {
+                return false;
+            }
+            foreach(Part x in PartsInGame(color))
+            {
+                bool[,] move = x.PossibleMovements();
+                for(int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (move[i, j])
+                        {
+                            Position origin = x.Position;
+                            Position destiny = new Position(i, j);
+                            Part capturedPart = ExecuteMovement(origin, destiny);
+                            bool CheckTest = IsInCheck(color);
+                            UndoMovement(origin, destiny, capturedPart);
+                            if(!CheckTest)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         public void InputNewPart(char column, int line, Part part)
         {
             Board.PlacePart(part, new ChessPosition(column, line).ToPosition());
@@ -186,19 +224,13 @@ namespace Chess
 
         private void PlaceParts()
         {
+            
             InputNewPart('c', 1, new Tower(Board, Color.Branca));
-            InputNewPart('c', 2, new Tower(Board, Color.Branca));
-            InputNewPart('d', 2, new Tower(Board, Color.Branca));
-            InputNewPart('e', 2, new Tower(Board, Color.Branca));
-            InputNewPart('e', 1, new Tower(Board, Color.Branca));
+            InputNewPart('h', 7, new Tower(Board, Color.Branca));
             InputNewPart('d', 1, new King(Board, Color.Branca));
 
-            InputNewPart('c', 7, new Tower(Board, Color.Vermelha));
-            InputNewPart('c', 8, new Tower(Board, Color.Vermelha));
-            InputNewPart('d', 7, new Tower(Board, Color.Vermelha));
-            InputNewPart('e', 7, new Tower(Board, Color.Vermelha));
-            InputNewPart('e', 8, new Tower(Board, Color.Vermelha));
-            InputNewPart('d', 8, new King(Board, Color.Vermelha));
+            InputNewPart('b', 8, new Tower(Board, Color.Vermelha));
+            InputNewPart('a', 8, new King(Board, Color.Vermelha));
         }
     }
 }
