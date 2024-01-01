@@ -56,14 +56,15 @@ namespace Xadrez_console
         {
             for (int i = 0; i < board.Lines;  i++)
             {
-                Console.Write(8 - i + " ");
+                Console.Write(8 - i + "  ");
                 for (int j = 0; j < board.Columns; j++)
                 {
                         PrintPart(board.Part(i,j));
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("  A B C D E F G H");
+            Console.WriteLine();
+            Console.WriteLine("   a b c d e f g h");
         }
 
         public static void PrintBoard(Board board, bool[,] possibleMovements)
@@ -89,7 +90,7 @@ namespace Xadrez_console
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("  A B C D E F G H");
+            Console.WriteLine("  a b c d e f g h");
             Console.BackgroundColor = originalBackground;
         }
 
