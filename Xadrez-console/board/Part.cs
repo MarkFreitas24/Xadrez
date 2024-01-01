@@ -31,7 +31,7 @@ namespace board
 
         public bool TherePossibleMovements()
         {
-            bool[,] possible = PossibleMovements();
+            bool[,] possible = PossiblesMovements();
             for (int i = 0; i < Board.Lines;  i++)
             {
                 for (int j = 0; j < Board.Columns; j++)
@@ -45,12 +45,12 @@ namespace board
             return false;
         }
 
-        public bool CanMoveTo(Position position)
+        public bool PossibleMovement(Position position)
         {
-            return PossibleMovements()[position.Line, position.Column];
+            return PossiblesMovements()[position.Line, position.Column];
         }
 
-        public abstract bool[,] PossibleMovements();
+        public abstract bool[,] PossiblesMovements();
         
 
 

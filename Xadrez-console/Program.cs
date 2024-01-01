@@ -24,7 +24,7 @@ namespace Xadrez_console
                         Position origin = Screen.ReadChessPosition().ToPosition();
                         match.ValidateOriginPosition(origin);
 
-                        bool[,] possiblesMovements = match.Board.Part(origin).PossibleMovements();
+                        bool[,] possiblesMovements = match.Board.Part(origin).PossiblesMovements();
 
                         Console.Clear();
                         Screen.PrintBoard(match.Board, possiblesMovements);

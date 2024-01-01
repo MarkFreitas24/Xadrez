@@ -19,7 +19,7 @@ namespace Chess
             return part == null || part.Color != Color;
         }
 
-        public override bool[,] PossibleMovements()
+        public override bool[,] PossiblesMovements()
         {
             bool[,] movements = new bool[Board.Lines, Board.Columns];
 

@@ -98,7 +98,7 @@ namespace Chess
 
         public void ValidateDestinyPosition(Position origin, Position destiny)
         {
-            if (!Board.Part(origin).CanMoveTo(destiny))
+            if (!Board.Part(origin).PossibleMovement(destiny))
             {
                 throw new BoardException("Posição de destino inválida");
             }
@@ -176,7 +176,7 @@ namespace Chess
             }
             foreach(Part x in PartsInGame(Opponent(color)))
             {
-                bool[,] mat = x.PossibleMovements();
+                bool[,] mat = x.PossiblesMovements();
                 if (mat[k.Position.Line, k.Position.Column])
                 {
                     return true;
@@ -193,7 +193,7 @@ namespace Chess
             }
             foreach(Part x in PartsInGame(color))
             {
-                bool[,] move = x.PossibleMovements();
+                bool[,] move = x.PossiblesMovements();
                 for(int i = 0; i < Board.Lines; i++)
                 {
                     for (int j = 0; j < Board.Columns; j++)
