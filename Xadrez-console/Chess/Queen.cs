@@ -75,7 +75,7 @@ namespace Chess
             }
 
             //North West
-            position.SetValues(position.Line - 1, position.Column - 1);
+            position.SetValues(Position.Line - 1, Position.Column - 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)
@@ -86,7 +86,7 @@ namespace Chess
             }
 
             //North East
-            position.SetValues(position.Line - 1, position.Column + 1);
+            position.SetValues(Position.Line - 1, Position.Column + 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)
@@ -97,7 +97,7 @@ namespace Chess
             }
 
             //South East
-            position.SetValues(position.Line + 1, position.Column + 1);
+            position.SetValues(Position.Line + 1, position.Column + 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)
@@ -108,7 +108,7 @@ namespace Chess
             }
 
             //South West
-            position.SetValues(position.Line + 1, position.Column - 1);
+            position.SetValues(Position.Line + 1, Position.Column - 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)

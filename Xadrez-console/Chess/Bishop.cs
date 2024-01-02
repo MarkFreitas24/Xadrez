@@ -28,9 +28,10 @@ namespace Chess
             Position position = new Position(0, 0);
 
             //North West
-            position.SetValues(position.Line - 1, position.Column - 1);
+            position.SetValues(Position.Line - 1, Position.Column - 1);
             while(Board.ValidPosition(position) && CanMove(position))
             {
+                movements[position.Line, position.Column] = true;
                 if(Board.Part(position) != null && Board.Part(position).Color != Color)
                 {
                     break;
@@ -39,9 +40,10 @@ namespace Chess
             }
 
             //North East
-            position.SetValues(position.Line - 1, position.Column + 1);
+            position.SetValues(Position.Line - 1, Position.Column + 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
+                movements[position.Line, position.Column] = true;
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)
                 {
                     break;
@@ -50,9 +52,10 @@ namespace Chess
             }
 
             //South East
-            position.SetValues(position.Line + 1, position.Column + 1);
+            position.SetValues(Position.Line + 1, Position.Column + 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
+                movements[position.Line, position.Column] = true;
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)
                 {
                     break;
@@ -61,9 +64,10 @@ namespace Chess
             }
 
             //South West
-            position.SetValues(position.Line + 1, position.Column - 1);
+            position.SetValues(Position.Line + 1, Position.Column - 1);
             while (Board.ValidPosition(position) && CanMove(position))
             {
+                movements[position.Line, position.Column] = true;
                 if (Board.Part(position) != null && Board.Part(position).Color != Color)
                 {
                     break;

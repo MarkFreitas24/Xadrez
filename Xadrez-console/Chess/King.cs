@@ -5,8 +5,10 @@ namespace Chess
 {
     internal class King : Part
     {
-        public King(Board board,Color color) : base(board, color)
+        private ChessMatch Match;
+        public King(Board board,Color color, ChessMatch match) : base(board, color)
         {
+            Match = match;
         }
         public override string ToString()
         {
@@ -17,6 +19,12 @@ namespace Chess
         {
             Part part = Board.Part(position);
             return part == null || part.Color != Color;
+        }
+
+        private bool RookTowerTest(Position position)
+        {
+            Part part = Board.Part(position);
+            return part != null && part is Tower && part.Color == Color && part.QuantityMovements == 0;
         }
 
         public override bool[,] PossiblesMovements()
@@ -81,6 +89,38 @@ namespace Chess
                 movements[position.Line, position.Column] = true;
             }
 
+            // ROOK
+            //LITTLE ROOK
+
+            if (QuantityMovements == 0 && !Match.Check)
+            {
+                Position positionTower1 = new Position(Position.Line, Position.Column + 3);
+                if (RookTowerTest(positionTower1))
+                {
+                    Position position1 = new Position(Position.Line, Position.Column + 1);
+                    Position position2 = new Position(Position.Line, Position.Column + 2);
+                    if(Board.Part(position1) == null && Board.Part(position2) == null)
+                    {
+                        movements[Position.Line, Position.Column + 2] = true;
+                    }
+                }
+            }
+
+            // BIG ROOK
+            if (QuantityMovements == 0 && !Match.Check)
+            {
+                Position positionTower2 = new Position(Position.Line, Position.Column - 4);
+                if (RookTowerTest(positionTower2))
+                {
+                    Position position1 = new Position(Position.Line, Position.Column - 1);
+                    Position position2 = new Position(Position.Line, Position.Column - 2);
+                    Position position3 = new Position(Position.Line, Position.Column - 3);
+                    if (Board.Part(position1) == null && Board.Part(position2) == null && Board.Part(position3) == null)
+                    {
+                        movements[Position.Line, Position.Column - 2] = true;
+                    }
+                }
+            }
             return movements;
         }
     }

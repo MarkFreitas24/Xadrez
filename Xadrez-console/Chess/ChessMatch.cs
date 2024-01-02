@@ -27,27 +27,66 @@ namespace Chess
 
         public Part ExecuteMovement(Position origin, Position destiny)
         {
-            Part p = Board.RemovePart(origin);
-            p.IncreaseQuantityMovement();
+            Part part = Board.RemovePart(origin);
+            part.IncreaseQuantityMovement();
             Part capturedPart = Board.RemovePart(destiny);
-            Board.PlacePart(p, destiny);
+            Board.PlacePart(part, destiny);
             if (capturedPart != null)
             {
                 Captured.Add(capturedPart);
             }
+
+            //LITTLE ROOK
+            if (part is King && destiny.Column == origin.Column + 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column + 3);
+                Position destinyTower = new Position(origin.Line, origin.Column + 1);
+                Part tower = Board.RemovePart(originTower);
+                tower.IncreaseQuantityMovement();
+                Board.PlacePart(tower, destinyTower);
+            }
+            //BIG ROOK
+            if (part is King && destiny.Column == origin.Column - 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column - 4);
+                Position destinyTower = new Position(origin.Line, origin.Column - 1);
+                Part tower = Board.RemovePart(originTower);
+                tower.IncreaseQuantityMovement();
+                Board.PlacePart(tower, destinyTower);
+            }
+
             return capturedPart;
         }
 
         public void UndoMovement(Position origin, Position destiny, Part capturedPart)
         {
-            Part p = Board.RemovePart(destiny);
-            p.DecreaseQuantityMovement();
+            Part part = Board.RemovePart(destiny);
+            part.DecreaseQuantityMovement();
             if (capturedPart != null)
             {
                 Board.PlacePart(capturedPart, destiny);
                 Captured.Remove(capturedPart);
             }
-            Board.PlacePart(p, origin);
+            Board.PlacePart(part, origin);
+
+            //LITTLE ROOK
+            if (part is King && destiny.Column == origin.Column + 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column + 3);
+                Position destinyTower = new Position(origin.Line, origin.Column + 1);
+                Part tower = Board.RemovePart(destinyTower);
+                tower.DecreaseQuantityMovement();
+                Board.PlacePart(tower, originTower);
+            }
+            //BIG ROOK
+            if (part is King && destiny.Column == origin.Column - 2)
+            {
+                Position originTower = new Position(origin.Line, origin.Column - 4);
+                Position destinyTower = new Position(origin.Line, origin.Column - 1);
+                Part tower = Board.RemovePart(destinyTower);
+                tower.DecreaseQuantityMovement();
+                Board.PlacePart(tower, originTower);
+            }
         }
 
         public void MakePlay(Position origin, Position destiny)
@@ -229,7 +268,7 @@ namespace Chess
             InputNewPart('b', 1, new Horse(Board, Color.Branca));
             InputNewPart('c', 1, new Bishop(Board, Color.Branca));
             InputNewPart('d', 1, new Queen(Board, Color.Branca));
-            InputNewPart('e', 1, new King(Board, Color.Branca));
+            InputNewPart('e', 1, new King(Board, Color.Branca, this));
             InputNewPart('f', 1, new Bishop(Board, Color.Branca));
             InputNewPart('g', 1, new Horse(Board, Color.Branca));
             InputNewPart('h', 1, new Tower(Board, Color.Branca));
@@ -246,7 +285,7 @@ namespace Chess
             InputNewPart('b', 8, new Horse(Board, Color.Vermelha));
             InputNewPart('c', 8, new Bishop(Board, Color.Vermelha));
             InputNewPart('d', 8, new Queen(Board, Color.Vermelha));
-            InputNewPart('e', 8, new King(Board, Color.Vermelha));
+            InputNewPart('e', 8, new King(Board, Color.Vermelha, this));
             InputNewPart('f', 8, new Bishop(Board, Color.Vermelha));
             InputNewPart('g', 8, new Horse(Board, Color.Vermelha));
             InputNewPart('h', 8, new Tower(Board, Color.Vermelha));
