@@ -140,6 +140,22 @@ namespace Chess
                 throw new BoardException("Você não pode se colocar em xeque!");
             }
 
+            Part part = Board.Part(destiny);
+
+            //PROMOTION
+            if(part is Pawn)
+            {
+                if(part.Color == Color.Branca && destiny.Line == 0 || (part.Color == Color.Vermelha && destiny.Line == 7))
+                {
+                    part = Board.RemovePart(destiny);
+                    Parts.Remove(part);
+                    Part quenn = new Queen(Board, part.Color);
+                    Board.PlacePart(quenn, destiny);
+                    Parts.Add(quenn);
+                }
+            }
+
+
             if (IsInCheck(Opponent(CurrentPlayer)))
             {
                 Check = true;
@@ -159,7 +175,7 @@ namespace Chess
                 ChangePlayer();
             }
 
-            Part part = Board.Part(destiny);
+            
 
             //En Passant
             if(part is Pawn && (destiny.Line == origin.Line - 2|| destiny.Line == origin.Line + 2))
