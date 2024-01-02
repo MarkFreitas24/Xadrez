@@ -12,6 +12,7 @@ namespace Chess
         private HashSet<Part> Parts;
         private HashSet<Part> Captured;
         public bool Check { get; private set; }
+        public Part VulnerableEnPassant { get; private set; }
 
         public ChessMatch()
         {
@@ -20,6 +21,7 @@ namespace Chess
             CurrentPlayer = Color.Branca;
             Finished = false;
             Check = false;
+            VulnerableEnPassant = null;
             Parts = new HashSet<Part>();
             Captured = new HashSet<Part>();
             PlaceParts();
@@ -55,6 +57,26 @@ namespace Chess
                 Board.PlacePart(tower, destinyTower);
             }
 
+            // En Passant
+            if (part is Pawn)
+            {
+                if (origin.Column != destiny.Column && capturedPart == null)
+                {
+                    Position positionPawn;
+                    if (part.Color == Color.Branca)
+                    {
+                        positionPawn = new Position(destiny.Line + 1, destiny.Column);
+                    }
+                    else
+                    {
+                        positionPawn = new Position(destiny.Line - 1, destiny.Column);
+                    }
+
+                    capturedPart = Board.RemovePart(positionPawn);
+                    Captured.Add(capturedPart);
+                }
+            }
+
             return capturedPart;
         }
 
@@ -87,6 +109,25 @@ namespace Chess
                 tower.DecreaseQuantityMovement();
                 Board.PlacePart(tower, originTower);
             }
+
+            //En Passant
+            if (part is Pawn)
+            {
+                if(origin.Column != destiny.Column && capturedPart == VulnerableEnPassant)
+                {
+                    Part pawn = Board.RemovePart(destiny);
+                    Position positionPawn;
+                    if (part.Color == Color.Branca)
+                    {
+                        positionPawn = new Position(3, destiny.Column);
+                    }
+                    else
+                    {
+                        positionPawn = new Position(4, destiny.Column);
+                    }
+                    Board.PlacePart(pawn, positionPawn);
+                }
+            }
         }
 
         public void MakePlay(Position origin, Position destiny)
@@ -117,6 +158,19 @@ namespace Chess
                 Round++;
                 ChangePlayer();
             }
+
+            Part part = Board.Part(destiny);
+
+            //En Passant
+            if(part is Pawn && (destiny.Line == origin.Line - 2|| destiny.Line == origin.Line + 2))
+            {
+                VulnerableEnPassant = part;
+            }
+            else
+            {
+                    VulnerableEnPassant = null;
+            }
+
         }
 
         public void ValidateOriginPosition(Position position)
@@ -272,14 +326,14 @@ namespace Chess
             InputNewPart('f', 1, new Bishop(Board, Color.Branca));
             InputNewPart('g', 1, new Horse(Board, Color.Branca));
             InputNewPart('h', 1, new Tower(Board, Color.Branca));
-            InputNewPart('a', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('b', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('c', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('d', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('e', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('f', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('g', 2, new Pawn(Board, Color.Branca));
-            InputNewPart('h', 2, new Pawn(Board, Color.Branca));
+            InputNewPart('a', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('b', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('c', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('d', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('e', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('f', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('g', 2, new Pawn(Board, Color.Branca, this));
+            InputNewPart('h', 2, new Pawn(Board, Color.Branca, this));
 
             InputNewPart('a', 8, new Tower(Board, Color.Vermelha));
             InputNewPart('b', 8, new Horse(Board, Color.Vermelha));
@@ -289,14 +343,14 @@ namespace Chess
             InputNewPart('f', 8, new Bishop(Board, Color.Vermelha));
             InputNewPart('g', 8, new Horse(Board, Color.Vermelha));
             InputNewPart('h', 8, new Tower(Board, Color.Vermelha));
-            InputNewPart('a', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('b', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('c', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('d', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('e', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('f', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('g', 7, new Pawn(Board, Color.Vermelha));
-            InputNewPart('h', 7, new Pawn(Board, Color.Vermelha));
+            InputNewPart('a', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('b', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('c', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('d', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('e', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('f', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('g', 7, new Pawn(Board, Color.Vermelha, this));
+            InputNewPart('h', 7, new Pawn(Board, Color.Vermelha, this));
         }
     }
 }

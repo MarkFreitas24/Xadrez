@@ -4,7 +4,11 @@ namespace Chess
 {
     internal class Pawn : Part
     {
-        public Pawn(Board board, Color color) : base(board, color) { }
+        private ChessMatch Match;
+        public Pawn(Board board, Color color, ChessMatch match) : base(board, color)
+        {
+            Match = match;
+        }
 
         public override string ToString()
         {
@@ -53,6 +57,22 @@ namespace Chess
                     movements[position.Line, position.Column] = true;
                 }
 
+                // En Passant
+                if(Position.Line == 3)
+                {
+                    Position west = new Position(Position.Line, Position.Column - 1);
+                    if(Board.ValidPosition(west) && ThereEnemy(west) && Board.Part(west) == Match.VulnerableEnPassant)
+                    {
+                        movements[west.Line - 1, west.Column] = true;
+                    }
+
+                    Position East = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(East) && ThereEnemy(East) && Board.Part(East) == Match.VulnerableEnPassant)
+                    {
+                        movements[East.Line - 1, East.Column] = true;
+                    }
+                }
+
             }
             else
             {
@@ -76,6 +96,22 @@ namespace Chess
                 if (Board.ValidPosition(position) && ThereEnemy(position))
                 {
                     movements[position.Line, position.Column] = true;
+                }
+
+                // En Passant
+                if (Position.Line == 4)
+                {
+                    Position west = new Position(Position.Line, Position.Column - 1);
+                    if (Board.ValidPosition(west) && ThereEnemy(west) && Board.Part(west) == Match.VulnerableEnPassant)
+                    {
+                        movements[west.Line + 1, west.Column] = true;
+                    }
+
+                    Position East = new Position(Position.Line, Position.Column + 1);
+                    if (Board.ValidPosition(East) && ThereEnemy(East) && Board.Part(East) == Match.VulnerableEnPassant)
+                    {
+                        movements[East.Line + 1, East.Column] = true;
+                    }
                 }
             }
 
