@@ -28,25 +28,26 @@ namespace Chess
 
             Position position = new Position(0, 0);
 
+
             if(Color == Color.Branca)
             {
-                position.SetValues(position.Line - 1, position.Column);
+                position.SetValues(Position.Line - 1, Position.Column);
                 if (Board.ValidPosition(position) && Free(position))
                 {
                     movements[position.Line, position.Column] = true;
                 }
-                position.SetValues(position.Line - 2, position.Column);
+                position.SetValues(Position.Line - 2, Position.Column);
                 Position position2 = new Position(position.Line - 1, position.Column);
                 if (Board.ValidPosition(position2) && Free(position2) && Board.ValidPosition(position) && Free(position) && QuantityMovements == 0)
                 {
                     movements[position.Line, position.Column] = true;
                 }
-                position.SetValues(position.Line - 1, position.Column - 1);
+                position.SetValues(Position.Line - 1, Position.Column - 1);
                 if (Board.ValidPosition(position) && ThereEnemy(position))
                 {
                     movements[position.Line, position.Column] = true;
                 }
-                position.SetValues(position.Line - 1, position.Column + 1);
+                position.SetValues(Position.Line - 1, Position.Column + 1);
                 if (Board.ValidPosition(position) && ThereEnemy(position))
                 {
                     movements[position.Line, position.Column] = true;
@@ -55,23 +56,23 @@ namespace Chess
             }
             else
             {
-                position.SetValues(position.Line + 1, position.Column);
+                position.SetValues(Position.Line + 1, Position.Column);
                 if (Board.ValidPosition(position) && Free(position))
                 {
                     movements[position.Line, position.Column] = true;
                 }
-                position.SetValues(position.Line + 2, position.Column);
+                position.SetValues(Position.Line + 2, Position.Column);
                 Position position2 = new Position(position.Line + 1, position.Column);
                 if (Board.ValidPosition(position2) && Free(position2) && Board.ValidPosition(position) && Free(position) && QuantityMovements == 0)
                 {
                     movements[position.Line, position.Column] = true;
                 }
-                position.SetValues(position.Line + 1, position.Column - 1);
+                position.SetValues(Position.Line + 1, Position.Column - 1);
                 if (Board.ValidPosition(position) && ThereEnemy(position))
                 {
                     movements[position.Line, position.Column] = true;
                 }
-                position.SetValues(position.Line + 1, position.Column + 1);
+                position.SetValues(Position.Line + 1, Position.Column + 1);
                 if (Board.ValidPosition(position) && ThereEnemy(position))
                 {
                     movements[position.Line, position.Column] = true;

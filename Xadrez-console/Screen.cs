@@ -99,7 +99,7 @@ namespace Xadrez_console
             string play = Console.ReadLine();
             char column = play[0];
             int line = int.Parse(play[1] + "");
-            return new ChessPosition(column, line);
+            return new ChessPosition(column, line); 
         }
 
         public static void PrintPart(Part part)
